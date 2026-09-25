@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Products - SNEHITHI Home grown foods</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.jpg" alt="SNEHITHI Home grown foods" class="nav-logo-img"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <span class="logo-text-fallback">
+        <span class="logo-icon">🌿</span>
+        <span class="logo-text" id="storeNameNav">SNEHITHI Home grown foods</span>
+      </span>
+    </a>
+        <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html" class="active">Products</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-btn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>🌿 Our Products</h1>
+    <p>Fresh, certified organic products delivered to your doorstep</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="products-layout">
+
+    <!-- Filter Sidebar -->
+    <aside class="filter-sidebar">
+      <div class="filter-title"><i class="fas fa-filter"></i> Filters</div>
+
+      <div class="filter-section">
+        <span class="filter-label">Categories</span>
+        <div id="categoryFilters"></div>
+      </div>
+
+      <div class="filter-section">
+        <span class="filter-label">Sort By</span>
+        <select class="sort-select" id="sortSelect" onchange="filterProducts()">
+          <option value="default">Default</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name-asc">Name: A to Z</option>
+        </select>
+      </div>
+
+      <div class="filter-section">
+        <span class="filter-label">Max Price: <span id="priceDisplay" class="price-display">₹500</span></span>
+        <input type="range" class="price-range" id="priceRange"
+          min="0" max="1500" value="1500" step="50"
+          oninput="document.getElementById('priceDisplay').textContent='₹'+this.value; filterProducts()"/>
+      </div>
+
+      <button onclick="resetFilters()" class="btn btn-outline btn-sm" style="width:100%;margin-top:8px;">
+        <i class="fas fa-redo"></i> Reset Filters
+      </button>
+    </aside>
+
+    <!-- Products Grid -->
+    <div>
+      <div class="search-bar">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search products..." oninput="filterProducts()"/>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+      <div class="empty-message" id="emptyMessage">
+        <div class="empty-icon">🔍</div>
+        <h3>No products found</h3>
+        <p>Try adjusting your search or filters</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding:24px 0;">
+      <p>&copy; 2024 SNEHITHI Home grown foods. All rights reserved. <a href="admin.html" style="color:inherit; text-decoration:none; opacity:0.3; margin-left:8px;" title="Owner Portal"><i class="fas fa-lock"></i></a></p>
+      <div class="footer-bottom-links">
+        <a href="index.html">Home</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://wa.me/919171133442">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script>
+  function resetFilters() {
+    document.getElementById("searchInput").value = "";
+    document.getElementById("sortSelect").value = "default";
+    document.getElementById("priceRange").value = 500;
+    document.getElementById("priceDisplay").textContent = "₹1500";
+    document.querySelectorAll(".filter-btn").forEach((b,i) => b.classList.toggle("active", i===0));
+    filterProducts();
+  }
+  // Pre-select category from URL ?cat=
+  window.addEventListener("DOMContentLoaded", () => {
+    const cat = new URLSearchParams(window.location.search).get("cat");
+    if (cat) {
+      setTimeout(() => {
+        const btn = document.querySelector(`.filter-btn[data-category="${cat}"]`);
+        if (btn) { document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); filterProducts(); }
+      }, 50);
+    }
+  });
+</script>
+<script>
+  // Auto-update store name from config.js
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof CONFIG === "undefined") return;
+    // Update page title
+    document.title = document.title.replace("SNEHITHI Home grown foods", CONFIG.storeName);
+    // Update all store name elements
+    document.querySelectorAll("#storeNameNav, #storeNameFooter").forEach(function(el) {
+      el.textContent = CONFIG.storeName;
+    });
+  });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - SNEHITHI Home grown foods</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.jpg" alt="SNEHITHI Home grown foods" class="nav-logo-img"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <span class="logo-text-fallback">
+        <span class="logo-icon">🌿</span>
+        <span class="logo-text" id="storeNameNav">SNEHITHI Home grown foods</span>
+      </span>
+    </a>
+        <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="about.html" class="active">About Us</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-btn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>🌿 About SNEHITHI Home grown foods</h1>
+    <p>Handcrafted homemade delicacies prepared with authentic traditional love</p>
+  </div>
+</div>
+
+<!-- OUR STORY -->
+<section class="about-story">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap" style="background:none; overflow:hidden; border:2px solid var(--border);">
+        <img src="images/logo.jpg" alt="SNEHITHI Home grown foods" style="width:100%; height:100%; object-fit:contain; background:#fff;"/>
+      </div>
+      <div>
+        <span class="about-badge">🏡 Traditional Kitchen</span>
+        <h2 class="about-title">Handcrafted with Care,<br>Prepared with Love</h2>
+        <p class="about-text">
+          <strong>SNEHITHI Home grown foods</strong> was born from a simple passion — to bring wholesome, authentic, homestyle traditional foods, nutritious ladoos, pure ghee, and flavorful thokkus to every dining table, crafted just like grandmother's cherished recipes.
+        </p>
+        <p class="about-text">
+          Every single batch is lovingly homemade using pure traditional ingredients, native millets, authentic cow ghee, natural jaggery, and selected spices — with zero artificial preservatives, zero synthetic colors, and zero compromise on hygiene and taste.
+        </p>
+        <div class="about-values">
+          <div class="value-item">
+            <div class="value-icon">🏡</div>
+            <div class="value-title">100% Homemade</div>
+            <div class="value-text">Authentic homestyle preparation</div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">🌿</div>
+            <div class="value-title">Pure Ingredients</div>
+            <div class="value-text">Chemical-free & natural</div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">🚚</div>
+            <div class="value-title">Freshly Packed</div>
+            <div class="value-text">Hygienically delivered to your door</div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon">💚</div>
+            <div class="value-title">Health First</div>
+            <div class="value-text">Wholesome family nutrition</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certs-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Our <span>Standards & Certifications</span></h2>
+      <p class="section-subtitle">Trusted quality and certified standards for your family</p>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-icon">🏅</div>
+        <div class="cert-name">MSME Certified</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">✅</div>
+        <div class="cert-name">FSSAI Licensed Quality</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🌿</div>
+        <div class="cert-name">100% Homestyle Preparation</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">♻️</div>
+        <div class="cert-name">Hygienic & Safe Packaging</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding:24px 0;">
+      <p>&copy; 2024 SNEHITHI Home grown foods. All rights reserved. <a href="admin.html" style="color:inherit; text-decoration:none; opacity:0.3; margin-left:8px;" title="Owner Portal"><i class="fas fa-lock"></i></a></p>
+      <div class="footer-bottom-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Shop</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script>
+  // Auto-update store name from config.js
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof CONFIG === "undefined") return;
+    document.title = document.title.replace("SNEHITHI Home grown foods", CONFIG.storeName);
+    document.querySelectorAll("#storeNameNav, #storeNameFooter").forEach(function(el) {
+      el.textContent = CONFIG.storeName;
+    });
+  });
+</script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Owner Dashboard - SNEHITHI Home grown foods</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+    :root {
+      --primary: #27AE60;
+      --primary-dark: #1E8449;
+      --primary-light: #E8F8F0;
+      --secondary: #FF6B35;
+      --accent: #F39C12;
+      --dark: #1B2A1E;
+      --gray: #6B7280;
+      --light-gray: #F3F4F6;
+      --border: #E5E7EB;
+      --white: #FFFFFF;
+      --danger: #E74C3C;
+      --radius: 12px;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; font-family: "Plus Jakarta Sans", sans-serif; }
+    body { background: #F8FAFC; color: var(--dark); min-height: 100vh; }
+
+    /* Login Lock Screen */
+    .login-overlay {
+      position: fixed; inset: 0; background: linear-gradient(135deg, #0A2E1A, #1A5C34);
+      display: flex; align-items: center; justify-content: center; z-index: 9999; padding: 20px;
+    }
+    .login-card {
+      background: white; border-radius: 20px; padding: 40px 30px; width: 380px; max-width: 100%;
+      text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+    .login-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: contain; margin-bottom: 12px; }
+    .login-title { font-size: 1.35rem; font-weight: 800; color: var(--dark); }
+    .login-sub { font-size: 0.85rem; color: var(--gray); margin: 6px 0 24px; }
+    .pin-input {
+      width: 100%; padding: 14px; font-size: 1.4rem; text-align: center; letter-spacing: 8px;
+      border: 2px solid var(--border); border-radius: var(--radius); outline: none; transition: 0.2s;
+    }
+    .pin-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-light); }
+    .btn-login {
+      width: 100%; background: var(--primary); color: white; border: none; padding: 14px;
+      font-size: 1rem; font-weight: 700; border-radius: var(--radius); cursor: pointer; margin-top: 18px;
+      transition: 0.2s;
+    }
+    .btn-login:hover { background: var(--primary-dark); }
+    .login-hint { font-size: 0.75rem; color: var(--gray); margin-top: 14px; }
+
+    /* Admin Navbar */
+    .admin-nav {
+      background: white; border-bottom: 1px solid var(--border); padding: 14px 28px;
+      display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100;
+    }
+    .admin-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--dark); }
+    .admin-logo img { width: 40px; height: 40px; border-radius: 50%; object-fit: contain; }
+    .admin-title { font-weight: 800; font-size: 1.1rem; }
+    .admin-badge { background: var(--primary-light); color: var(--primary); font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-site { background: var(--light-gray); color: var(--dark); border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+    .btn-logout { background: #FEE2E2; color: var(--danger); border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
+
+    /* Layout */
+    .admin-container { max-width: 1300px; margin: 0 auto; padding: 24px; }
+
+    /* Metrics Cards */
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .metric-card { background: white; border-radius: var(--radius); padding: 20px; border: 1px solid var(--border); display: flex; align-items: center; gap: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .metric-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+    .metric-val { font-size: 1.5rem; font-weight: 800; color: var(--dark); }
+    .metric-lbl { font-size: 0.82rem; color: var(--gray); font-weight: 600; margin-top: 2px; }
+
+    /* Tabs */
+    .tab-bar { display: flex; gap: 8px; background: white; padding: 6px; border-radius: var(--radius); border: 1px solid var(--border); margin-bottom: 24px; overflow-x: auto; }
+    .tab-btn { flex: 1; min-width: 140px; padding: 12px 18px; border: none; background: transparent; font-weight: 700; font-size: 0.9rem; border-radius: 8px; cursor: pointer; color: var(--gray); transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .tab-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(39, 174, 96, 0.25); }
+
+    /* Sections */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .panel { background: white; border-radius: var(--radius); border: 1px solid var(--border); padding: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); margin-bottom: 24px; }
+    .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .panel-title { font-size: 1.15rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+
+    /* Buttons */
+    .btn-action { background: var(--primary); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: 0.2s; }
+    .btn-action:hover { background: var(--primary-dark); }
+    .btn-secondary { background: var(--light-gray); color: var(--dark); border: 1px solid var(--border); padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
+    .btn-whatsapp { background: #25D366; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; }
+
+    /* Tables */
+    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
+    th { background: #F9FAFB; padding: 14px 16px; font-weight: 700; color: var(--gray); border-bottom: 1px solid var(--border); }
+    td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover { background: #FAFAFA; }
+
+    .price-input { width: 90px; padding: 6px 10px; border: 1.5px solid var(--border); border-radius: 6px; font-weight: 700; font-size: 0.9rem; color: var(--primary-dark); }
+    .price-input:focus { border-color: var(--primary); outline: none; }
+    .stock-switch { display: inline-flex; align-items: center; cursor: pointer; gap: 6px; font-weight: 600; font-size: 0.82rem; }
+
+    /* Forms */
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 0.85rem; font-weight: 700; color: var(--dark); }
+    .form-input { padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 0.9rem; font-weight: 500; outline: none; transition: 0.2s; }
+    .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-light); }
+    .form-hint { font-size: 0.75rem; color: var(--gray); }
+
+    /* Toast */
+    .toast-msg {
+      position: fixed; bottom: 24px; right: 24px; background: #1B2A1E; color: white; padding: 14px 24px;
+      border-radius: 10px; font-weight: 600; font-size: 0.9rem; display: none; z-index: 10000;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25); border-left: 5px solid var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🔒 LOGIN OVERLAY -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <img src="images/logo.jpg" alt="SNEHITHI" class="login-logo" onerror="this.src='https://via.placeholder.com/70?text=🌿'"/>
+      <div class="login-title">Owner Admin Portal</div>
+      <div class="login-sub">Enter your 4-digit PIN to access live store controls</div>
+      <input type="password" id="pinInput" class="pin-input" maxlength="6" placeholder="••••" autofocus onkeypress="if(event.key==='Enter') verifyPin()"/>
+      <button class="btn-login" onclick="verifyPin()"><i class="fas fa-unlock-alt"></i> Unlock Dashboard</button>
+      <div class="login-hint">Default PIN: <strong>9171</strong> (Changeable inside)</div>
+    </div>
+  </div>
+
+  <!-- 🟢 ADMIN NAVBAR -->
+  <header class="admin-nav">
+    <div class="admin-logo">
+      <img src="images/logo.jpg" alt="Logo" onerror="this.src='images/logo.jpg'"/>
+      <div>
+        <div class="admin-title">SNEHITHI <span class="admin-badge">Owner Admin</span></div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <a href="index.html" class="btn-site" target="_blank"><i class="fas fa-external-link-alt"></i> View Store</a>
+      <button class="btn-logout" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> Lock</button>
+    </div>
+  </header>
+
+  <main class="admin-container">
+
+    <!-- 📊 TOP METRICS -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon" style="background:#E8F8F0; color:#27AE60;"><i class="fas fa-shopping-bag"></i></div>
+        <div>
+          <div class="metric-val" id="totalOrdersCount">0</div>
+          <div class="metric-lbl">Total Orders Placed</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon" style="background:#FEF3C7; color:#D97706;"><i class="fas fa-rupee-sign"></i></div>
+        <div>
+          <div class="metric-val" id="totalRevenue">₹0</div>
+          <div class="metric-lbl">Total Order Value</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon" style="background:#E0E7FF; color:#4F46E5;"><i class="fas fa-boxes"></i></div>
+        <div>
+          <div class="metric-val" id="activeProductsCount">39</div>
+          <div class="metric-lbl">Active Products</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon" style="background:#FCE7F3; color:#DB2777;"><i class="fas fa-tags"></i></div>
+        <div>
+          <div class="metric-val" id="categoriesCount">9</div>
+          <div class="metric-lbl">Product Categories</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 📑 TAB SELECTOR -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('orders')"><i class="fas fa-clipboard-list"></i> Orders (<span id="tabOrderCount">0</span>)</button>
+      <button class="tab-btn" onclick="switchTab('products')"><i class="fas fa-tags"></i> Products & Pricing</button>
+      <button class="tab-btn" onclick="switchTab('settings')"><i class="fas fa-sliders-h"></i> Store Settings</button>
+      <button class="tab-btn" onclick="switchTab('backup')"><i class="fas fa-cloud-upload-alt"></i> Sync & Export</button>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- 📦 TAB 1: ORDER MANAGEMENT -->
+    <!-- ======================================================== -->
+    <div class="tab-content active" id="tab-orders">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fas fa-inbox text-primary"></i> Customer Orders Received</div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn-secondary" onclick="exportOrdersToCSV()"><i class="fas fa-file-excel"></i> Download Excel/CSV</button>
+            <button class="btn-secondary" onclick="clearAllOrders()" style="color:var(--danger);"><i class="fas fa-trash"></i> Clear Orders</button>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Customer Name</th>
+                <th>WhatsApp No</th>
+                <th>Delivery Address</th>
+                <th>Items Ordered</th>
+                <th>Total</th>
+                <th>UPI UTR / Ref</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody">
+              <!-- Dynamically rendered -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- 🏷️ TAB 2: PRODUCTS & PRICE MANAGER -->
+    <!-- ======================================================== -->
+    <div class="tab-content" id="tab-products">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fas fa-edit text-primary"></i> Edit Prices, Stock & Products</div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn-secondary" onclick="openAddProductModal()"><i class="fas fa-plus"></i> Add New Product</button>
+            <button class="btn-action" onclick="saveAllProductEdits()"><i class="fas fa-save"></i> Save Changes</button>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap;">
+          <input type="text" id="adminProductSearch" class="form-input" style="max-width:300px;" placeholder="Search products..." oninput="renderAdminProducts()"/>
+          <select id="adminCategoryFilter" class="form-input" style="max-width:220px;" onchange="renderAdminProducts()">
+            <option value="All">All Categories</option>
+          </select>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Pack Size</th>
+                <th>Selling Price (₹)</th>
+                <th>In Stock?</th>
+                <th>Badge</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="adminProductsBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:16px; text-align:right;">
+          <button class="btn-action" onclick="saveAllProductEdits()"><i class="fas fa-save"></i> Save All Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- ⚙️ TAB 3: STORE SETTINGS & QUICK WEBSITE CHANGES -->
+    <!-- ======================================================== -->
+    <div class="tab-content" id="tab-settings">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fas fa-cog text-primary"></i> Store Information & Payment Settings</div>
+          <button class="btn-action" onclick="saveStoreSettings()"><i class="fas fa-save"></i> Save Store Settings</button>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Store Name</label>
+            <input type="text" id="cfgStoreName" class="form-input"/>
+          </div>
+          <div class="form-group">
+            <label>Store Tagline</label>
+            <input type="text" id="cfgTagline" class="form-input"/>
+          </div>
+          <div class="form-group">
+            <label>Official UPI ID (For Customer Payments)</label>
+            <input type="text" id="cfgUpiId" class="form-input"/>
+            <span class="form-hint">Used to generate checkout QR code and copy-paste box.</span>
+          </div>
+          <div class="form-group">
+            <label>Owner WhatsApp Order Receive Number</label>
+            <input type="text" id="cfgOwnerWhatsApp" class="form-input"/>
+            <span class="form-hint">Format with country code: 919171133442</span>
+          </div>
+          <div class="form-group">
+            <label>Customer Support Phone</label>
+            <input type="text" id="cfgPhone" class="form-input"/>
+          </div>
+          <div class="form-group">
+            <label>Official Email</label>
+            <input type="email" id="cfgEmail" class="form-input"/>
+          </div>
+          <div class="form-group">
+            <label>Business Hours</label>
+            <input type="text" id="cfgHours" class="form-input"/>
+          </div>
+          <div class="form-group">
+            <label>Owner Dashboard PIN</label>
+            <input type="text" id="cfgAdminPin" class="form-input" maxlength="6"/>
+            <span class="form-hint">PIN required to unlock this dashboard.</span>
+          </div>
+        </div>
+
+        <div style="margin-top:20px; text-align:right;">
+          <button class="btn-action" onclick="saveStoreSettings()"><i class="fas fa-save"></i> Save Store Settings</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- 💾 TAB 4: SYNC & EXPORT FOR NETLIFY -->
+    <!-- ======================================================== -->
+    <div class="tab-content" id="tab-backup">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fas fa-cloud-download-alt text-primary"></i> Export & Netlify Deployment Files</div>
+        </div>
+        <p style="color:var(--gray); font-size:0.9rem; line-height:1.6; margin-bottom:20px;">
+          All changes made in this dashboard work <strong>immediately in real-time</strong>. If you want to permanently update the source files before uploading to Netlify, you can download the updated configuration files with 1-click below:
+        </p>
+
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+          <button class="btn-action" onclick="downloadUpdatedProductsJS()"><i class="fas fa-file-code"></i> Download Updated products.js</button>
+          <button class="btn-action" onclick="downloadUpdatedConfigJS()"><i class="fas fa-file-code"></i> Download Updated config.js</button>
+          <button class="btn-secondary" onclick="resetAllToFactoryDefaults()" style="color:var(--danger);"><i class="fas fa-undo"></i> Reset to Factory Defaults</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Notification Toast -->
+  <div id="adminToast" class="toast-msg"></div>
+
+  <!-- Scripts -->
+  <script src="config.js"></script>
+  <script src="js/products.js"></script>
+  <script>
+    // ── PIN AUTHENTICATION ─────────────────────────────────────────
+    function verifyPin() {
+      const pin = document.getElementById("pinInput").value.trim();
+      const expectedPin = CONFIG.adminPin || "9171";
+      if (pin === expectedPin) {
+        sessionStorage.setItem("snehithi_admin_auth", "true");
+        document.getElementById("loginOverlay").style.display = "none";
+        initDashboard();
+        showToast("✅ Welcome to Owner Portal!");
+      } else {
+        alert("❌ Incorrect PIN. Please try again.");
+        document.getElementById("pinInput").value = "";
+      }
+    }
+
+    function logoutAdmin() {
+      sessionStorage.removeItem("snehithi_admin_auth");
+      location.reload();
+    }
+
+    // Auto-check session
+    document.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("snehithi_admin_auth") === "true") {
+        document.getElementById("loginOverlay").style.display = "none";
+        initDashboard();
+      }
+    });
+
+    function initDashboard() {
+      renderMetrics();
+      renderOrders();
+      populateCategoryFilter();
+      renderAdminProducts();
+      populateStoreSettings();
+    }
+
+    // ── TAB SWITCHER ───────────────────────────────────────────────
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+      if (event && event.currentTarget) event.currentTarget.classList.add("active");
+      document.getElementById("tab-" + tabId).classList.add("active");
+    }
+
+    // ── METRICS ───────────────────────────────────────────────────
+    function renderMetrics() {
+      const orders = JSON.parse(localStorage.getItem("snehithi_orders") || "[]");
+      document.getElementById("totalOrdersCount").textContent = orders.length;
+      document.getElementById("tabOrderCount").textContent = orders.length;
+
+      const rev = orders.reduce((sum, o) => sum + (o.total || 0), 0);
+      document.getElementById("totalRevenue").textContent = "₹" + rev.toLocaleString("en-IN");
+      document.getElementById("activeProductsCount").textContent = PRODUCTS.length;
+      document.getElementById("categoriesCount").textContent = getCategories().length - 1;
+    }
+
+    // ── ORDERS TAB ────────────────────────────────────────────────
+    function renderOrders() {
+      const tbody = document.getElementById("ordersTableBody");
+      const orders = JSON.parse(localStorage.getItem("snehithi_orders") || "[]").reverse();
+
+      if (orders.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:var(--gray); padding:30px;">No customer orders recorded yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = orders.map((o, idx) => {
+        const dateStr = o.date ? new Date(o.date).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }) : "Recent";
+        const itemsStr = (o.items || []).map(i => `${i.name} (${i.qty})`).join(", ");
+        const waClean = (o.phone || "").replace(/\D/g, "");
+        const waFull = waClean.startsWith("91") ? waClean : "91" + waClean;
+        const waMsg = encodeURIComponent(`Hello ${o.name}! Thank you for your order on SNEHITHI Home grown foods. Your order is confirmed.`);
+
+        return `
+          <tr>
+            <td style="font-size:0.8rem; color:var(--gray);">${dateStr}</td>
+            <td><strong>${o.name || "Customer"}</strong></td>
+            <td>+91 ${o.phone || ""}</td>
+            <td style="font-size:0.82rem; max-width:200px;">${o.address || ""}, ${o.pincode || ""}</td>
+            <td style="font-size:0.82rem; max-width:220px;">${itemsStr}</td>
+            <td><strong style="color:var(--primary);">${o.total === 0 ? "FREE" : "₹" + o.total.toLocaleString("en-IN")}</strong></td>
+            <td style="font-size:0.8rem; font-family:monospace; color:#D97706;">${o.utrNumber || "N/A"}</td>
+            <td>
+              <a href="https://wa.me/${waFull}?text=${waMsg}" target="_blank" class="btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> Chat
+              </a>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function exportOrdersToCSV() {
+      const orders = JSON.parse(localStorage.getItem("snehithi_orders") || "[]");
+      if (orders.length === 0) return alert("No orders to export!");
+
+      let csv = "Date,Customer Name,Phone,Address,Pincode,Items,Total,Payment Method,UTR Number\n";
+      orders.forEach(o => {
+        const itemsStr = (o.items || []).map(i => `${i.name} x${i.qty}`).join(" | ");
+        csv += `"${o.date}","${o.name}","${o.phone}","${o.address}","${o.pincode}","${itemsStr}","${o.total}","${o.paymentMethod || "UPI"}","${o.utrNumber || ""}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url; a.download = `SNEHITHI_Orders_${Date.now()}.csv`;
+      a.click();
+      showToast("📥 Orders exported to CSV!");
+    }
+
+    function clearAllOrders() {
+      if (confirm("Are you sure you want to clear all order history from this browser?")) {
+        localStorage.removeItem("snehithi_orders");
+        renderMetrics();
+        renderOrders();
+        showToast("🗑️ Order list cleared.");
+      }
+    }
+
+    // ── PRODUCTS TAB ──────────────────────────────────────────────
+    function populateCategoryFilter() {
+      const select = document.getElementById("adminCategoryFilter");
+      const cats = getCategories();
+      select.innerHTML = cats.map(c => `<option value="${c.name}">${c.name}</option>`).join("");
+    }
+
+    function renderAdminProducts() {
+      const tbody = document.getElementById("adminProductsBody");
+      const search = document.getElementById("adminProductSearch").value.toLowerCase();
+      const cat = document.getElementById("adminCategoryFilter").value;
+
+      const filtered = PRODUCTS.filter(p => {
+        const matchSearch = p.name.toLowerCase().includes(search) || p.category.toLowerCase().includes(search);
+        const matchCat = cat === "All" || p.category === cat;
+        return matchSearch && matchCat;
+      });
+
+      tbody.innerHTML = filtered.map(p => `
+        <tr data-id="${p.id}">
+          <td>
+            <img src="${p.image || 'images/logo.jpg'}" style="width:40px; height:40px; border-radius:6px; object-fit:cover;" onerror="this.src='images/logo.jpg'"/>
+          </td>
+          <td><strong>${p.name}</strong></td>
+          <td><span style="font-size:0.78rem; background:var(--light-gray); padding:3px 8px; border-radius:4px;">${p.category}</span></td>
+          <td>${p.unit}</td>
+          <td>
+            ₹ <input type="number" class="price-input" value="${p.price}" id="price-${p.id}" min="0"/>
+          </td>
+          <td>
+            <label class="stock-switch">
+              <input type="checkbox" id="stock-${p.id}" ${p.inStock ? "checked" : ""}/>
+              <span>${p.inStock ? "In Stock" : "Out of Stock"}</span>
+            </label>
+          </td>
+          <td>
+            <input type="text" class="form-input" style="padding:4px 8px; width:100px; font-size:0.8rem;" value="${p.badge || ''}" id="badge-${p.id}" placeholder="e.g. Popular"/>
+          </td>
+          <td>
+            <button onclick="deleteProduct(${p.id})" style="background:none; border:none; color:var(--danger); cursor:pointer; font-size:1rem;" title="Delete Product">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    function saveAllProductEdits() {
+      PRODUCTS.forEach(p => {
+        const priceEl = document.getElementById(`price-${p.id}`);
+        const stockEl = document.getElementById(`stock-${p.id}`);
+        const badgeEl = document.getElementById(`badge-${p.id}`);
+
+        if (priceEl) p.price = parseFloat(priceEl.value) || 0;
+        if (stockEl) p.inStock = stockEl.checked;
+        if (badgeEl) p.badge = badgeEl.value.trim();
+      });
+
+      localStorage.setItem("snehithi_products", JSON.stringify(PRODUCTS));
+      showToast("💾 All prices & product changes saved live!");
+      renderAdminProducts();
+      renderMetrics();
+    }
+
+    function deleteProduct(id) {
+      if (confirm("Are you sure you want to delete this product?")) {
+        const idx = PRODUCTS.findIndex(p => p.id === id);
+        if (idx !== -1) {
+          PRODUCTS.splice(idx, 1);
+          localStorage.setItem("snehithi_products", JSON.stringify(PRODUCTS));
+          renderAdminProducts();
+          renderMetrics();
+          showToast("🗑️ Product removed.");
+        }
+      }
+    }
+
+    function openAddProductModal() {
+      const name = prompt("Enter Product Name:");
+      if (!name) return;
+      const category = prompt("Enter Category (e.g., Ladoos, Traditional Kanji & Mixes, Pickle, Spices & Essentials):", "Traditional Kanji & Mixes");
+      const unit = prompt("Enter Pack Size / Unit (e.g. 250 g, 1 kg):", "250 g");
+      const price = parseFloat(prompt("Enter Selling Price in ₹:", "100")) || 0;
+      const desc = prompt("Enter short description:", "Freshly prepared homemade food.");
+
+      const newId = Date.now();
+      const newProd = {
+        id: newId,
+        name: name.trim(),
+        category: category.trim(),
+        unit: unit.trim(),
+        price: price,
+        originalPrice: price,
+        image: "",
+        description: desc.trim(),
+        badge: "New",
+        inStock: true,
+        featured: true,
+        rating: 5,
+        reviews: 0
+      };
+
+      PRODUCTS.push(newProd);
+      localStorage.setItem("snehithi_products", JSON.stringify(PRODUCTS));
+      renderAdminProducts();
+      renderMetrics();
+      showToast("✅ Product added successfully!");
+    }
+
+    // ── SETTINGS TAB ──────────────────────────────────────────────
+    function populateStoreSettings() {
+      document.getElementById("cfgStoreName").value = CONFIG.storeName || "";
+      document.getElementById("cfgTagline").value = CONFIG.tagline || "";
+      document.getElementById("cfgUpiId").value = CONFIG.upiId || "";
+      document.getElementById("cfgOwnerWhatsApp").value = CONFIG.ownerWhatsApp || "";
+      document.getElementById("cfgPhone").value = CONFIG.phone || "";
+      document.getElementById("cfgEmail").value = CONFIG.ownerEmail || "";
+      document.getElementById("cfgHours").value = CONFIG.hours || "";
+      document.getElementById("cfgAdminPin").value = CONFIG.adminPin || "9171";
+    }
+
+    function saveStoreSettings() {
+      CONFIG.storeName = document.getElementById("cfgStoreName").value.trim();
+      CONFIG.tagline = document.getElementById("cfgTagline").value.trim();
+      CONFIG.upiId = document.getElementById("cfgUpiId").value.trim();
+      CONFIG.ownerWhatsApp = document.getElementById("cfgOwnerWhatsApp").value.trim();
+      CONFIG.phone = document.getElementById("cfgPhone").value.trim();
+      CONFIG.ownerEmail = document.getElementById("cfgEmail").value.trim();
+      CONFIG.hours = document.getElementById("cfgHours").value.trim();
+      CONFIG.adminPin = document.getElementById("cfgAdminPin").value.trim() || "9171";
+
+      localStorage.setItem("snehithi_config", JSON.stringify(CONFIG));
+      showToast("💾 Store Settings saved live!");
+    }
+
+    // ── EXPORT / BACKUP ───────────────────────────────────────────
+    function downloadUpdatedProductsJS() {
+      const content = "// Updated products list from SNEHITHI Owner Dashboard\nconst DEFAULT_PRODUCTS = " +
+                      JSON.stringify(PRODUCTS, null, 2) + ";\n\n" +
+                      'const savedProducts = JSON.parse(localStorage.getItem("snehithi_products") || "null");\n' +
+                      'const PRODUCTS = (savedProducts && savedProducts.length > 0) ? savedProducts : DEFAULT_PRODUCTS;\n';
+      
+      const blob = new Blob([content], { type: "application/javascript" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "products.js";
+      a.click();
+      showToast("📥 products.js downloaded!");
+    }
+
+    function downloadUpdatedConfigJS() {
+      const content = "// Updated configuration from SNEHITHI Owner Dashboard\nconst DEFAULT_CONFIG = " +
+                      JSON.stringify(CONFIG, null, 2) + ";\n\n" +
+                      'const savedConfig = JSON.parse(localStorage.getItem("snehithi_config") || "null");\n' +
+                      'const CONFIG = Object.assign({}, DEFAULT_CONFIG, savedConfig || {});\n';
+
+      const blob = new Blob([content], { type: "application/javascript" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "config.js";
+      a.click();
+      showToast("📥 config.js downloaded!");
+    }
+
+    function resetAllToFactoryDefaults() {
+      if (confirm("Reset all products, prices, and settings back to original defaults?")) {
+        localStorage.removeItem("snehithi_products");
+        localStorage.removeItem("snehithi_config");
+        location.reload();
+      }
+    }
+
+    // Toast
+    function showToast(msg) {
+      const t = document.getElementById("adminToast");
+      t.textContent = msg;
+      t.style.display = "block";
+      setTimeout(() => { t.style.display = "none"; }, 3000);
+    }
+  </script>
+</body>
+</html>
