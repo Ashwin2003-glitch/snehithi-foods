@@ -1,0 +1,284 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Feedback - SNEHITHI Home grown foods</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .feedback-hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(39, 174, 96, 0.12); color: var(--primary);
+      padding: 6px 16px; border-radius: var(--radius-full);
+      font-size: 0.85rem; font-weight: 700; margin-bottom: 12px;
+    }
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+      padding: 40px 0 60px;
+    }
+    .feedback-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .feedback-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary);
+    }
+    .feedback-img-wrap {
+      background: #fafafa;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .feedback-img-wrap img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease;
+    }
+    .feedback-img-wrap img:hover {
+      transform: scale(1.02);
+    }
+    .feedback-caption {
+      padding: 18px 20px;
+      background: white;
+    }
+    .feedback-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--light);
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .feedback-stars {
+      color: #f39c12;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+    .feedback-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .feedback-summary {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .feedback-source {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      color: #25D366;
+      font-weight: 600;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+    }
+    .feedback-cta-box {
+      background: linear-gradient(135deg, #f0fff4, #e8f5e9);
+      border: 2px dashed var(--primary);
+      border-radius: var(--radius-lg);
+      padding: 44px 24px;
+      text-align: center;
+      margin: 20px 0 60px;
+    }
+    .feedback-cta-box h3 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .feedback-cta-box p {
+      color: var(--gray);
+      max-width: 520px;
+      margin: 0 auto 24px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.jpg" alt="SNEHITHI Home grown foods" class="nav-logo-img"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <span class="logo-text-fallback">
+        <span class="logo-icon">🌿</span>
+        <span class="logo-text" id="storeNameNav">SNEHITHI Home grown foods</span>
+      </span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="feedback.html" class="active">Feedback</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-btn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>💬 Real Customer Feedback</h1>
+    <p>Authentic reviews and love shared by our customers on WhatsApp</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="feedback-grid">
+
+    <!-- Review 1: Nalangu Mavu -->
+    <div class="feedback-card">
+      <div class="feedback-img-wrap">
+        <img src="images/feedback/feedback-1.jpg" alt="Nalangu Mavu Customer Review"/>
+      </div>
+      <div class="feedback-caption">
+        <span class="feedback-tag">Herbal Body Care</span>
+        <div class="feedback-stars">★★★★★</div>
+        <div class="feedback-title">"Skin is so soft & herbs smell fresh!"</div>
+        <div class="feedback-summary">Customer using our Herbal Nalangu Mavu for 2 weeks shared how fresh and soft it feels on skin.</div>
+        <div class="feedback-source">
+          <i class="fab fa-whatsapp"></i> Verified WhatsApp Feedback
+        </div>
+      </div>
+    </div>
+
+    <!-- Review 2: Herbal Shikakai Powder -->
+    <div class="feedback-card">
+      <div class="feedback-img-wrap">
+        <img src="images/feedback/feedback-2.jpg" alt="Herbal Shikakai Powder Customer Review"/>
+      </div>
+      <div class="feedback-caption">
+        <span class="feedback-tag">Herbal Hair Wash</span>
+        <div class="feedback-stars">★★★★★</div>
+        <div class="feedback-title">"Hair was very soft & smooth"</div>
+        <div class="feedback-summary">Happy customer raving about our traditional herbal shikakai hair wash powder after first use.</div>
+        <div class="feedback-source">
+          <i class="fab fa-whatsapp"></i> Verified WhatsApp Feedback
+        </div>
+      </div>
+    </div>
+
+    <!-- Review 3: Laddus Bulk Order -->
+    <div class="feedback-card">
+      <div class="feedback-img-wrap">
+        <img src="images/feedback/feedback-3.jpg" alt="Laddus Customer Review"/>
+      </div>
+      <div class="feedback-caption">
+        <span class="feedback-tag">Healthy Ladoos</span>
+        <div class="feedback-stars">★★★★★</div>
+        <div class="feedback-title">"Laddu is super!"</div>
+        <div class="feedback-summary">Customer from T.Nagar stall bulk order shared instant praise for our homemade healthy ladoos.</div>
+        <div class="feedback-source">
+          <i class="fab fa-whatsapp"></i> Verified WhatsApp Feedback
+        </div>
+      </div>
+    </div>
+
+    <!-- Review 4: Vallarai Keerai Thokku -->
+    <div class="feedback-card">
+      <div class="feedback-img-wrap">
+        <img src="images/feedback/feedback-4.jpg" alt="Vallarai Keerai Thokku Customer Review"/>
+      </div>
+      <div class="feedback-caption">
+        <span class="feedback-tag">Thokku Varieties</span>
+        <div class="feedback-stars">★★★★★</div>
+        <div class="feedback-title">"Fresh homemade taste, perfect spice"</div>
+        <div class="feedback-summary">"Texture was nice & smooth, went very well with hot rice, idli and dosa. Truly authentic South Indian flavor."</div>
+        <div class="feedback-source">
+          <i class="fab fa-whatsapp"></i> Verified WhatsApp Feedback
+        </div>
+      </div>
+    </div>
+
+    <!-- Review 5: Shikakai Repeat Order -->
+    <div class="feedback-card">
+      <div class="feedback-img-wrap">
+        <img src="images/feedback/feedback-5.jpg" alt="Shikakai Repeat Order Review"/>
+      </div>
+      <div class="feedback-caption">
+        <span class="feedback-tag">Repeat Customer</span>
+        <div class="feedback-stars">★★★★★</div>
+        <div class="feedback-title">"Want to buy again — using it regularly!"</div>
+        <div class="feedback-summary">Customer from Tambaram stall requesting repeat orders for 250g and 500g after seeing amazing results.</div>
+        <div class="feedback-source">
+          <i class="fab fa-whatsapp"></i> Verified WhatsApp Feedback
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Share Feedback CTA -->
+  <div class="feedback-cta-box">
+    <h3>❤️ Share Your Experience with SNEHITHI</h3>
+    <p>Tried our homemade ladoos, pure ghee, thokkus or herbal products? We'd love to receive your valuable feedback!</p>
+    <a href="https://wa.me/919171133442?text=Hello%20SNEHITHI%2C%20I%20would%20like%20to%20share%20my%20feedback%3A" class="btn btn-whatsapp btn-lg">
+      <i class="fab fa-whatsapp"></i> Share Feedback on WhatsApp
+    </a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding:24px 0;">
+      <p>&copy; 2024 SNEHITHI Home grown foods. All rights reserved. <a href="admin.html" style="color:inherit; text-decoration:none; opacity:0.3; margin-left:8px;" title="Owner Portal"><i class="fas fa-lock"></i></a></p>
+      <div class="footer-bottom-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof CONFIG !== "undefined") {
+      document.title = document.title.replace("SNEHITHI Home grown foods", CONFIG.storeName);
+      document.querySelectorAll("#storeNameNav, #storeNameFooter").forEach(function(el) {
+        el.textContent = CONFIG.storeName;
+      });
+    }
+  });
+</script>
+</body>
+</html>
+

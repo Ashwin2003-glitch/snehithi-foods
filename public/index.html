@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SNEHITHI Home grown foods - Fresh. Organic. Delivered.</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.jpg" alt="SNEHITHI Home grown foods" class="nav-logo-img"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <span class="logo-text-fallback">
+        <span class="logo-icon">🌿</span>
+        <span class="logo-text" id="storeNameNav">SNEHITHI Home grown foods</span>
+      </span>
+    </a>
+        <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-btn" title="Cart">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>🏡</span> 100% Homemade & Traditional
+      </div>
+      <h1 class="hero-title">
+        Eat Healthy,<br>
+        <span class="highlight">Live Better</span>
+      </h1>
+      <p class="hero-text">
+        Discover the finest homemade traditional foods, healthy ladoos, pure ghee, herbal products, and authentic pickles prepared with love, purity, and traditional recipes.
+      </p>
+      <div class="hero-actions">
+        <a href="products.html" class="btn btn-primary btn-lg">
+          <i class="fas fa-leaf"></i> Shop Now
+        </a>
+        <a href="about.html" class="btn btn-outline btn-lg" style="color:#fff;border-color:rgba(255,255,255,0.5);">
+          Our Story
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Homemade</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">Fresh</div>
+          <div class="stat-label">Traditional Recipes</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">Pure</div>
+          <div class="stat-label">No Chemicals</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-shapes">
+    <div class="hero-circle hero-circle-1"></div>
+    <div class="hero-circle hero-circle-2"></div>
+    <div class="hero-circle hero-circle-3"></div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section categories-section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Shop by <span>Category</span></h2>
+      <p class="section-subtitle">Browse our wide range of homemade foods and traditional specialties</p>
+    </div>
+    <div class="categories-grid" id="homeCategoryGrid">
+      <!-- Categories are auto-generated from your products in products.js -->
+      <div style="grid-column:1/-1;text-align:center;color:var(--gray);padding:20px;">
+        Loading categories...
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="section" style="background:var(--light-gray)">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Why Choose <span>SNEHITHI Home grown foods</span>?</h2>
+      <p class="section-subtitle">We are committed to traditional quality, pure taste, and your family's health</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🏡</div>
+        <div class="why-title">100% Homemade</div>
+        <div class="why-text">Prepared in authentic homestyle kitchens with pure ingredients and zero preservatives.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🌿</div>
+        <div class="why-title">Pure & Natural</div>
+        <div class="why-text">Made with traditional millets, pure ghee, natural jaggery, and time-tested recipes.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🚚</div>
+        <div class="why-title">Freshly Packed</div>
+        <div class="why-text">Carefully packed in hygienic conditions and delivered fresh right to your doorstep.</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📱</div>
+        <div class="why-title">Easy UPI Payment</div>
+        <div class="why-text">Pay smoothly and securely with GPay, PhonePe, Paytm, or any UPI app.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="newsletter-text">
+        <h2>🌿 Stay Connected with SNEHITHI!</h2>
+        <p>Subscribe for newly prepared batches, seasonal specials, and healthy tips.</p>
+      </div>
+      <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+        <input type="email" placeholder="Enter your email address" required/>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:14px;">
+          <img src="images/logo.jpg" alt="SNEHITHI Home grown foods" class="nav-logo-img" style="height:44px;"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+          <span class="logo-text-fallback">
+            <span class="logo-icon">🌿</span>
+            <span class="logo-text" style="color:#fff;" id="storeNameFooter">SNEHITHI Home grown foods</span>
+          </span>
+        </div>
+        <p>Your trusted homemade destination for healthy ladoos, pure ghee, herbal care, and traditional culinary delights.</p>
+        <div class="social-links">
+          <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+          <a href="https://wa.me/919171133442" class="social-link"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Quick Links</div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="about.html">About Us</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Categories</div>
+        <div class="footer-links">
+          <a href="products.html?cat=Ladoos">Ladoos</a>
+          <a href="products.html?cat=Health+%26+Nutrition">Health Mix</a>
+          <a href="products.html?cat=Pickle">Pickles</a>
+          <a href="products.html?cat=Thokku+Varieties">Thokkus</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-heading">Contact Us</div>
+        <div class="footer-links">
+          <a href="tel:+919171133442"><i class="fas fa-phone" style="margin-right:6px;"></i>+91 9171133442</a>
+          <a href="https://wa.me/919171133442"><i class="fab fa-whatsapp" style="margin-right:6px;"></i>WhatsApp</a>
+          <a href="mailto:Snehithi.hr.helpdesk@gmail.com"><i class="fas fa-envelope" style="margin-right:6px;"></i>Email Us</a>
+        </div>
+        <div style="margin-top:12px;font-size:0.82rem;color:rgba(255,255,255,0.5);">
+          <i class="fas fa-clock" style="margin-right:6px;"></i>Mon-Sat: 9AM - 6PM
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 SNEHITHI Home grown foods. All rights reserved. <a href="admin.html" style="color:inherit; text-decoration:none; opacity:0.3; margin-left:8px;" title="Owner Portal"><i class="fas fa-lock"></i></a></p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Refund Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script>
+  function subscribeNewsletter(e) {
+    e.preventDefault();
+    showToast("✅ Thank you for subscribing!");
+    e.target.reset();
+  }
+
+  // Auto-update store name from config.js
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof CONFIG === "undefined") return;
+    document.title = document.title.replace("SNEHITHI Home grown foods", CONFIG.storeName);
+    document.querySelectorAll("#storeNameNav, #storeNameFooter").forEach(function(el) {
+      el.textContent = CONFIG.storeName;
+    });
+  });
+</script>
+</body>
+</html>
+
+
+
+

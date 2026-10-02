@@ -1,0 +1,322 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SNEHITHI Home grown foods - Cart & Checkout</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    .upi-section {
+      background: linear-gradient(135deg, #f0fff4, #e8f5e9);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin: 18px 0;
+    }
+    .upi-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 12px;
+    }
+    .upi-id-box {
+      background: #ffffff;
+      border: 2px dashed var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      text-align: center;
+      margin: 12px 0;
+    }
+    .upi-id-text {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 0.5px;
+      word-break: break-all;
+    }
+    .btn-copy-upi {
+      background: var(--light);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      margin-top: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+    .btn-copy-upi:hover {
+      background: var(--primary);
+      color: white;
+    }
+    .upi-apps {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+    .upi-app {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .upi-steps {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.84rem;
+      color: var(--dark);
+      line-height: 1.8;
+      margin-top: 10px;
+    }
+    .utr-input-group {
+      margin-top: 16px;
+    }
+    .utr-input-group label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .utr-hint {
+      font-size: 0.78rem;
+      color: var(--gray);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="container">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.jpg" alt="SNEHITHI Home grown foods" class="nav-logo-img"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+      <span class="logo-text-fallback">
+        <span class="logo-icon">🌿</span>
+        <span class="logo-text" id="storeNameNav">SNEHITHI Home grown foods</span>
+      </span>
+    </a>
+        <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="feedback.html">Feedback</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="cart.html" class="cart-btn">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </a>
+      <button class="nav-toggle" id="navToggle"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>🛒 Your Cart & Checkout</h1>
+    <p>Complete your order securely with instant UPI payment</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Empty Cart -->
+  <div id="cartEmpty" class="cart-empty" style="display:none;min-height:400px;">
+    <div class="cart-empty-icon">🛒</div>
+    <h3>Your cart is empty</h3>
+    <p>Add some organic goodness to get started!</p>
+    <a href="products.html" class="btn btn-primary" style="margin-top:8px;">
+      <i class="fas fa-leaf"></i> Browse Products
+    </a>
+  </div>
+
+  <!-- Cart Body -->
+  <div id="cartBody">
+    <div class="cart-layout">
+
+      <!-- Left: Cart Items -->
+      <div>
+        <div class="cart-panel">
+          <div class="cart-panel-header">
+            <span class="cart-panel-title"><i class="fas fa-shopping-bag"></i> Order Items</span>
+            <a href="products.html" class="btn btn-outline btn-sm">+ Add More</a>
+          </div>
+          <div id="cartItems"></div>
+        </div>
+      </div>
+
+      <!-- Right: Summary + Checkout -->
+      <div>
+
+        <!-- Order Summary -->
+        <div class="cart-panel" style="margin-bottom:20px;">
+          <div class="cart-panel-header">
+            <span class="cart-panel-title"><i class="fas fa-receipt"></i> Order Summary</span>
+          </div>
+          <div class="order-summary">
+            <div class="summary-row"><span>Subtotal</span><span id="subTotal">₹0</span></div>
+            <div class="summary-row"><span>Delivery</span><span style="color:var(--success)">FREE</span></div>
+            <div class="summary-row total"><span>Total Payable</span><span id="cartTotal">₹0</span></div>
+          </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <div class="cart-panel">
+          <div class="cart-panel-header">
+            <span class="cart-panel-title"><i class="fas fa-user"></i> Delivery Details</span>
+          </div>
+          <div class="checkout-form">
+
+            <div class="form-group">
+              <label class="form-label">Full Name <span class="required">*</span></label>
+              <input class="form-input" id="custName" type="text" placeholder="Enter your full name"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">WhatsApp Number <span class="required">*</span></label>
+              <input class="form-input" id="custPhone" type="tel" placeholder="10-digit WhatsApp number" maxlength="10"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email (Optional)</label>
+              <input class="form-input" id="custEmail" type="email" placeholder="your@email.com"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Delivery Address <span class="required">*</span></label>
+              <textarea class="form-input" id="custAddress" rows="3" placeholder="Door No, Street Name, Area, Landmark..."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pincode <span class="required">*</span></label>
+              <input class="form-input" id="custPincode" type="text" placeholder="6-digit pincode" maxlength="6"/>
+            </div>
+
+            <!-- UPI Payment Section -->
+            <div class="upi-section">
+              <div class="upi-header">
+                <i class="fas fa-qrcode"></i> Pay via UPI (GPay / PhonePe / Paytm / BHIM)
+              </div>
+
+              <div style="text-align:center; margin: 12px 0;">
+                <img id="upiQrImage" alt="Scan to Pay via UPI" style="width:160px; height:160px; border-radius:10px; border:2px solid var(--primary); padding:6px; background:white; display:inline-block; box-shadow:var(--shadow-sm);"/>
+                <div style="font-size:0.75rem; color:var(--gray); margin-top:4px;">Scan with GPay, PhonePe or Paytm</div>
+              </div>
+              <div class="upi-id-box">
+                <div style="font-size:0.8rem; color:var(--gray); margin-bottom:4px;">Send payment to Official UPI ID:</div>
+                <div class="upi-id-text" id="displayUpiId">yourname@upi</div>
+                <button type="button" class="btn-copy-upi" onclick="copyUpiId()">
+                  <i class="fas fa-copy"></i> Copy UPI ID
+                </button>
+              </div>
+
+              <div class="upi-apps">
+                <span class="upi-app">📱 Google Pay</span>
+                <span class="upi-app">📱 PhonePe</span>
+                <span class="upi-app">📱 Paytm</span>
+                <span class="upi-app">📱 BHIM / Any UPI</span>
+              </div>
+
+              <div class="upi-steps">
+                <strong>How to complete payment:</strong><br>
+                1️⃣ Copy the UPI ID above.<br>
+                2️⃣ Open GPay / PhonePe / Paytm and transfer total amount (<strong id="payAmountHint">₹0</strong>).<br>
+                3️⃣ Note the 12-digit <strong>UPI Reference / UTR Number</strong>.<br>
+                4️⃣ Paste it below and submit order.
+              </div>
+
+              <div class="utr-input-group">
+                <label>UPI Transaction ID / UTR No. <span class="required">*</span></label>
+                <input class="form-input" id="utrNumber" type="text"
+                  placeholder="e.g. 425812345678 (12-digit UTR / Ref ID)"/>
+                <div class="utr-hint">Found in your payment app transaction history/details.</div>
+              </div>
+            </div>
+
+            <!-- Submit Order Button -->
+            <button id="placeOrderBtn" onclick="initiatePayment()">
+              <i class="fas fa-check-circle"></i> I've Paid via UPI — Place Order
+            </button>
+
+            <p style="text-align:center;font-size:0.8rem;color:var(--gray);margin-top:12px;">
+              📲 Order summary with "Paid through UPI" will be sent to WhatsApp automatically.
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding:24px 0;">
+      <p>&copy; 2024 SNEHITHI Home grown foods. All rights reserved. <a href="admin.html" style="color:inherit; text-decoration:none; opacity:0.3; margin-left:8px;" title="Owner Portal"><i class="fas fa-lock"></i></a></p>
+      <div class="footer-bottom-links">
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/whatsapp.js"></script>
+<script src="js/payment.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Show UPI ID from config
+    const upiEl = document.getElementById("displayUpiId");
+    if (upiEl && typeof CONFIG !== "undefined") {
+      upiEl.textContent = CONFIG.upiId;
+    }
+
+        // Update QR Code
+    const qrImg = document.getElementById("upiQrImage");
+    if (qrImg && typeof CONFIG !== "undefined" && typeof getCartTotal === "function") {
+      const tot = getCartTotal();
+      const upiUrl = `upi://pay?pa=${encodeURIComponent(CONFIG.upiId)}&pn=${encodeURIComponent(CONFIG.storeName)}&am=${tot}&cu=INR`;
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+    }
+    // Sync hint amount
+    const hint = document.getElementById("payAmountHint");
+    if (hint && typeof getCartTotal === "function") {
+      const tot = getCartTotal();
+      hint.textContent = tot === 0 ? "FREE" : (CONFIG.currencySymbol + tot.toLocaleString("en-IN"));
+    }
+
+    if (typeof CONFIG !== "undefined") {
+      document.querySelectorAll("#storeNameNav").forEach(el => el.textContent = CONFIG.storeName);
+    }
+  });
+
+  function copyUpiId() {
+    const upiId = document.getElementById("displayUpiId")?.textContent;
+    if (upiId) {
+      navigator.clipboard.writeText(upiId).then(() => showToast("✅ UPI ID copied to clipboard!"));
+    }
+  }
+</script>
+</body>
+</html>
+
+
+
+
